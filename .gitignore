@@ -3,5 +3,6 @@
 *.opendb
 
 # Ignore all project files except .cpp and .h
-*.sln
+/Imitator/Imitator.sln
+*.vcxproj
 *.vcxproj.*

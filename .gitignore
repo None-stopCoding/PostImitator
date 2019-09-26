@@ -2,7 +2,11 @@
 /Imitator/.vs/*
 *.opendb
 
-# Ignore all project files except .cpp and .h
+# Ignore project configs
 /Imitator/Imitator.sln
 *.vcxproj
 *.vcxproj.*
+
+# Ignore Debugger files
+/Imitator/Debug/*
+/Imitator/Imitator/Debug/*

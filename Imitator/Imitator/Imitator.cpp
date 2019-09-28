@@ -3,11 +3,13 @@
 
 #include "Imitator.h"
 
-Imitator::Imitator() : state(0), tape(new int[this->TAPE_SIZE]()) 
+Imitator::Imitator() : state(0)
 {
 	// TODO добавить title к консольке и поменять цвет самой консольки
 	/*const char* consoleTitle = "Машина Поста";
 	SetConsoleTitle(consoleTitle);*/
+
+	errorMsg = "Ошибка в работе имитатора. Приносим свои извинения.\nТриггер:\t";
 
 	// Увеличиваем буфер конcольки
 	_COORD coordinates;
@@ -18,40 +20,18 @@ Imitator::Imitator() : state(0), tape(new int[this->TAPE_SIZE]())
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		this->state = 101;
+		state = 101;
 	}
-
-	// устанавливаем дефолтные значения каретки и меток на ленте
 }
 
 void Imitator::run()
 {
-	this->show();
-}
-
-void Imitator::show()
-{
-	// выводим картеку
-	for (int section = 0; section < this->TAPE_SIZE; section++) {
-		break;
+	try {
+		tape.show();
 	}
-	// выводим ленту
-	for (int section = 0; section < this->TAPE_SIZE; section++) {
-		switch (this->tape[section]) {
-		case 0:
-			printf("O");		// метка не стоит
-			break;
-		case 1:
-			printf("0");		// метка стоит
-			break;
-		case 2:
-			//U + 26C9 - каретка белая
-			break;
-		default:
-			break;
-		}
+	catch (char* e) {
+		throw strcat(errorMsg, e);
 	}
-	return;
 }
 
 /* Геттеры */

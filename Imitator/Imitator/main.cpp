@@ -1,10 +1,10 @@
 #include <iostream>
 
 #include "Imitator.h"
+#include "Tape.h"
 
 int main()
 {
-	// TODO Создать сущность Лента
 	Imitator app;
 	app.run();
 

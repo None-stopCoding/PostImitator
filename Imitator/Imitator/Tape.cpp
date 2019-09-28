@@ -21,6 +21,7 @@ void Tape::show()
 			printf(" ");
 		}
 	}
+	printf("\n");
 
 	// выводим ленту
 	for (int section = 0; section < this->TAPE_SIZE; section++) {
@@ -29,10 +30,10 @@ void Tape::show()
 			printf("O");		// метка не стоит
 			break;
 		case 1:
-			printf("0");		// метка стоит
+			printf("*");		// метка стоит
 			break;
 		default:
-			throw "Ошибка в отображении ленты";
+			throw "Ошибка в отображении ленты\n";
 		}
 	}
 	return;

@@ -10,6 +10,6 @@ int main()
 
 	if (app.__getState() == 101) {
 		system("cls");
-		printf("Ошибка в работе имитатора. Приносим свои извинения.");
+		printf("");
 	}
 }

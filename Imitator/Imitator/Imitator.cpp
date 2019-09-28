@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 #include <Windows.h>
 
 #include "Imitator.h"
@@ -9,7 +10,7 @@ Imitator::Imitator() : state(0)
 	/*const char* consoleTitle = "Машина Поста";
 	SetConsoleTitle(consoleTitle);*/
 
-	errorMsg = "Ошибка в работе имитатора. Приносим свои извинения.\nТриггер:\t";
+	*errorMsg = "Ошибка в работе имитатора. Приносим свои извинения.\nТриггер:\t"[0];
 
 	// Увеличиваем буфер конcольки
 	_COORD coordinates;
@@ -20,11 +21,16 @@ Imitator::Imitator() : state(0)
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		state = 101;
+		throw strcat(errorMsg, &"Ошибка изменения буфера консоли"[0]);
 	}
 }
 
 void Imitator::run()
+{
+	this->edit();
+}
+
+void Imitator::edit()
 {
 	try {
 		tape.show();
@@ -32,6 +38,11 @@ void Imitator::run()
 	catch (char* e) {
 		throw strcat(errorMsg, e);
 	}
+}
+
+void Imitator::compile()
+{
+
 }
 
 /* Геттеры */

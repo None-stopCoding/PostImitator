@@ -13,7 +13,8 @@ class Imitator
 																	101 - системная ошибка)
 	Tape tape;							// лента имитатора
 
-	char* concatError(const char* );				// сборка ошибок
+	void concatError(const char* );				// сборка ошибок
+	void helper();
 
 public:
 	Imitator();							// запуск имитатора

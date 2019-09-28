@@ -9,7 +9,7 @@ int main()
 
 	Imitator app;
 	try {
-		app.run();
+		app.edit();
 	}
 	catch (const char* e) {
 		system("cls");

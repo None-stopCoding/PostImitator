@@ -1,6 +1,7 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
 
 #include "Imitator.h"
 
@@ -19,36 +20,91 @@ Imitator::Imitator() : state(0)
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		throw this->concatError("Ошибка изменения буфера консоли");
+		this->concatError("Ошибка изменения буфера консоли");
+		throw errorMsg;
 	}
 }
 
-char* Imitator::concatError(const char* msg)
+void Imitator::concatError(const char* msg)
 {
 	char error[1000];
 	strcpy(error, msg);
 	strcat(errorMsg, error);
-	return errorMsg;
 }
 
-void Imitator::run()
+void Imitator::helper(const char* mode)
 {
-	this->edit();
+	printf("\nПереключение режимов:");
+	printf("\n\tCtrl - режим редактирования/ выполнения");
+	printf("\nВы в режиме %s\n", mode);
 }
 
 void Imitator::edit()
+{
+	this->helper("редактирования");
+
+	this->editComand();
+
+	bool wrongInput = false;
+	do {
+		try {
+			tape.show();
+		}
+		catch (const char* e) {
+			this->concatError(e);
+			throw errorMsg;
+		}
+
+		printf("\n\n\t1. Лента");
+		printf("\n\t2. Команды");
+		printf("\nВыберите объект редактирования: ");
+		switch (_getch()) {
+		case 49:
+			this->editTape();
+			break;
+		case 50:
+			this->editComand();
+			break;
+		default:
+			system("cls");
+			wrongInput = true;
+		}
+	} while (wrongInput);
+		
+}
+
+void Imitator::editTape()
+{
+	try {
+		tape.showEdit();
+	}
+	catch (const char* e) {
+		this->concatError(e);
+		throw errorMsg;
+	}
+
+	int key = _getch();
+	if (key == VK_CONTROL) {
+		this->editComand;
+	}
+}
+
+void Imitator::editComand()
 {
 	try {
 		tape.show();
 	}
 	catch (const char* e) {
-		throw this->concatError(e);
+		this->concatError(e);
+		throw errorMsg;
 	}
+
+	printf("Inside");
 }
 
-void Imitator::compile()
+void Imitator::execute()
 {
-
+	this->helper("компиляции");
 }
 
 /* Геттеры */

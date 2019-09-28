@@ -42,35 +42,7 @@ void Imitator::helper(const char* mode)
 void Imitator::edit()
 {
 	this->helper("редактирования");
-
 	this->editComand();
-
-	bool wrongInput = false;
-	do {
-		try {
-			tape.show();
-		}
-		catch (const char* e) {
-			this->concatError(e);
-			throw errorMsg;
-		}
-
-		printf("\n\n\t1. Лента");
-		printf("\n\t2. Команды");
-		printf("\nВыберите объект редактирования: ");
-		switch (_getch()) {
-		case 49:
-			this->editTape();
-			break;
-		case 50:
-			this->editComand();
-			break;
-		default:
-			system("cls");
-			wrongInput = true;
-		}
-	} while (wrongInput);
-		
 }
 
 void Imitator::editTape()
@@ -82,6 +54,8 @@ void Imitator::editTape()
 		this->concatError(e);
 		throw errorMsg;
 	}
+
+	printf("\nИндекс ленты, где меняем значение (если там стоит метка, то ее убираем, если ее там нет, то ставим):");
 
 	int key = _getch();
 	if (key == VK_CONTROL) {

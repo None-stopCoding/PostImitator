@@ -34,8 +34,31 @@ void Tape::show()
 			break;
 		default:
 			throw "Ошибка в отображении ленты\n";
-			break;
 		}
 	}
+	printf("\n");
 	return;
+}
+
+void Tape::showEdit()
+{
+	this->show();
+	int rows = 0;
+	while (rows++ < 3) {
+		for (int section = 0; section < this->TAPE_SIZE; section += 10) {
+			switch (rows) {
+			case 0:
+				printf("^");
+				break;
+			case 1:
+				printf("|");
+				break;
+			case 2:
+				printf("%d", section);
+				break;
+			default:
+				throw "Ошибка в отображении ленты (режим редактирования)\n";
+			}
+		}
+	}
 }

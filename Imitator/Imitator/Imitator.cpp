@@ -33,6 +33,10 @@ char* Imitator::concatError(const char* msg)
 
 void Imitator::run()
 {
+	printf("\nПереключение режимов:");
+	printf("\n\t- режим редактирования");
+	printf("\n\t- режим выполнения\n");
+
 	this->edit();
 }
 
@@ -46,7 +50,7 @@ void Imitator::edit()
 	}
 }
 
-void Imitator::compile()
+void Imitator::execute()
 {
 
 }

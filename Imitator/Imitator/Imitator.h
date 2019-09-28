@@ -19,7 +19,7 @@ public:
 	Imitator();							// запуск имитатора
 	void run();							// контроль выбора режима
 	void edit();						// режим редактировани€
-	void compile();						// режим компил€ции
+	void execute();						// режим компил€ции
 
 	// геттеры
 	int __getState();

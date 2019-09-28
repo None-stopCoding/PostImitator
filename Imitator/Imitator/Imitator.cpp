@@ -10,8 +10,6 @@ Imitator::Imitator() : state(0)
 	/*const char* consoleTitle = "Машина Поста";
 	SetConsoleTitle(consoleTitle);*/
 
-	*errorMsg = "Ошибка в работе имитатора. Приносим свои извинения.\nТриггер:\t"[0];
-
 	// Увеличиваем буфер конcольки
 	_COORD coordinates;
 	coordinates.X = 500;
@@ -21,8 +19,16 @@ Imitator::Imitator() : state(0)
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		throw strcat(errorMsg, &"Ошибка изменения буфера консоли"[0]);
+		throw this->concatError("Ошибка изменения буфера консоли");
 	}
+}
+
+char* Imitator::concatError(const char* msg)
+{
+	char error[1000];
+	strcpy(error, msg);
+	strcat(errorMsg, error);
+	return errorMsg;
 }
 
 void Imitator::run()
@@ -35,8 +41,8 @@ void Imitator::edit()
 	try {
 		tape.show();
 	}
-	catch (char* e) {
-		throw strcat(errorMsg, e);
+	catch (const char* e) {
+		throw this->concatError(e);
 	}
 }
 

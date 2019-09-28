@@ -5,11 +5,14 @@
 
 int main()
 {
-	Imitator app;
-	app.run();
+	setlocale(LC_ALL, "ru");
 
-	if (app.__getState() == 101) {
+	Imitator app;
+	try {
+		app.run();
+	}
+	catch (const char* e) {
 		system("cls");
-		printf("");
+		printf("\n%s\n", e);
 	}
 }

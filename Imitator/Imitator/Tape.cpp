@@ -7,7 +7,7 @@ Tape::Tape() : tape(new int[this->TAPE_SIZE]()), carret(CARRET_START_POS)
 	// устанавливаем дефолтные значения меток на ленте
 	tape[10] = 1;
 	tape[11] = 1;
-	tape[13] = 1;
+	tape[13] = 2;
 }
 
 void Tape::show()
@@ -34,6 +34,7 @@ void Tape::show()
 			break;
 		default:
 			throw "Ошибка в отображении ленты\n";
+			break;
 		}
 	}
 	return;

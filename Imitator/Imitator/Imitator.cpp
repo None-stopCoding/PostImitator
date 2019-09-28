@@ -32,21 +32,19 @@ void Imitator::concatError(const char* msg)
 	strcat(errorMsg, error);
 }
 
-void Imitator::run()
-{
-	this->helper();
-	this->edit();
-}
-
-void Imitator::helper()
+void Imitator::helper(const char* mode)
 {
 	printf("\nПереключение режимов:");
-	printf("\n\tCtrl+1 - режим редактирования");
-	printf("\n\tCtrl+2 - режим выполнения\n");
+	printf("\n\tCtrl - режим редактирования/ выполнения");
+	printf("\nВы в режиме %s\n", mode);
 }
 
 void Imitator::edit()
 {
+	this->helper("редактирования");
+
+	this->editComand();
+
 	bool wrongInput = false;
 	do {
 		try {
@@ -75,9 +73,38 @@ void Imitator::edit()
 		
 }
 
+void Imitator::editTape()
+{
+	try {
+		tape.showEdit();
+	}
+	catch (const char* e) {
+		this->concatError(e);
+		throw errorMsg;
+	}
+
+	int key = _getch();
+	if (key == VK_CONTROL) {
+		this->editComand;
+	}
+}
+
+void Imitator::editComand()
+{
+	try {
+		tape.show();
+	}
+	catch (const char* e) {
+		this->concatError(e);
+		throw errorMsg;
+	}
+
+	printf("Inside");
+}
+
 void Imitator::execute()
 {
-
+	this->helper("компиляции");
 }
 
 /* Геттеры */

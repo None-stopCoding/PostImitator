@@ -1,4 +1,6 @@
 #pragma once
+#include "Helper.h";
+
 class Tape
 {
 	const int TAPE_SIZE = 100;			// длина ленты
@@ -8,6 +10,8 @@ class Tape
 											0 - нет метки, \
 											1 - есть метка
 	int carret;							// текущая позиция каретки
+	Helper helper;						// помощник
+
 public:
 	Tape();								// создаем ленту
 	void show();						// вывести ленту в консоль

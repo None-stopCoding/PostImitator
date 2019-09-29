@@ -7,8 +7,6 @@ using namespace std;
 
 #include "Imitator.h"
 
-typedef void (*FnPtr)();
-
 Imitator::Imitator()
 {
 	// TODO добавить title к консольке и поменять цвет самой консольки
@@ -24,10 +22,11 @@ Imitator::Imitator()
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		throw helper.concatError(errorMsg, "Ошибка изменения буфера консоли");
+		throw strcat(errorMsg, "Ошибка изменения буфера консоли");
 	}
 
-	this->editComand();
+	//this->editComand();
+	this->editTape();
 }
 
 char* Imitator::controlMode(const char* mode)
@@ -66,7 +65,7 @@ void Imitator::editTape()
 		tape.showEdit();
 	}
 	catch (const char* e) {
-		throw helper.concatError(errorMsg, e);
+		throw strcat(errorMsg, e);
 	}
 
 	printf("\nИндекс ленты, где меняем значение\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
@@ -89,7 +88,7 @@ void Imitator::editComand()
 		tape.show();
 	}
 	catch (const char* e) {
-		throw helper.concatError(errorMsg, e);
+		throw strcat(errorMsg, e);
 	}
 
 	printf("\n:");

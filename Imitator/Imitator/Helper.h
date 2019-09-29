@@ -3,7 +3,7 @@ class Helper
 {
 public:
 	Helper();
-	char* concatError(char*, const char*);		// сборка ошибок
-	void infoMessage(const char*);			// информационное сообщение про режимы
+	void infoMessage(const char*);												// информационное сообщение про режимы
+	char* generateStringForEditTapeMode(int size = 0, const char* str = "");	// генерация строки для подсказки
 };
 

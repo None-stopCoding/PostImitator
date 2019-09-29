@@ -1,6 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
-
 #include "Helper.h"
 
 Helper::Helper() {}
@@ -13,22 +10,16 @@ void Helper::infoMessage(const char* mode)
 	printf("\n\tShift - нажимаем каждый раз перед вводом чего либо");
 	printf("\nВы в режиме %s\n", mode);
 }
-char* Helper::generateStringForEditTapeMode(int size, const char* str = "")
+string Helper::generateStringForEditTapeMode(int size, string str)
 {
-	if (size) {
-		if (strlen(str)) {
-			char line[1000];
+	string  line = "",
+			space = "         ";
 
-			char probel[10] = "         ";
-			char* tab = strcat(probel, str);
-			for (int jump = 0; jump < size; jump += 10) {
-				line += strcat(line, tab);
-			}
-		}
-		else {
-
+	if (str.length()) {
+		for (int jump = 0; jump < size; jump += 10) {
+			line += space + str;
 		}
 	}
 
-	return 0;
+	return line + "\n";
 }

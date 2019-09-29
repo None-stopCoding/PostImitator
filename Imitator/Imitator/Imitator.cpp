@@ -1,11 +1,4 @@
-﻿#include <iostream>
-#include <Windows.h>
-#include <conio.h>
-#include <string>
-#include <map>
-using namespace std;
-
-#include "Imitator.h"
+﻿#include "Imitator.h"
 
 Imitator::Imitator()
 {
@@ -31,7 +24,7 @@ Imitator::Imitator()
 
 char* Imitator::controlMode(const char* mode)
 {
-	char input[] = "";
+	char input[20] = "";
 	switch (_getch()) {
 	case VK_ESCAPE:
 		(mode == "edit tape") ? this->editComand() : this->editTape();
@@ -39,12 +32,12 @@ char* Imitator::controlMode(const char* mode)
 	case VK_CONTROL:
 		(mode == "execute") ? this->editComand() : this->execute();
 		break;
-	case VK_SHIFT:
-		scanf_s("%s", input);
+	case VK_TAB:
+		scanf_s("%s", &input[0]);
 		return input;
 	default:
 		printf("Ввод запрещен!");
-		getchar();
+		_getch();
 
 		if (mode == "edit tape") {
 			this->editTape();
@@ -68,10 +61,9 @@ void Imitator::editTape()
 		throw strcat(errorMsg, e);
 	}
 
-	printf("\nИндекс ленты, где меняем значение\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
+	printf("\nИндекс ленты, где меняем значение(стрелками отмечены десятки)\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
 	char* input = this->controlMode("edit tape");
-	int validInput = 0;
-	
+	printf(input);
 	try {
 		tape.editTape(tape.validate(input));
 	} catch (const char* e) {

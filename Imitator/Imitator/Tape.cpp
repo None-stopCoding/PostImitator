@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string>
-using namespace std;
-
 #include "Tape.h"
 
 Tape::Tape() : tape(new int[TAPE_SIZE]()), carret(CARRET_START_POS) 
@@ -47,11 +43,9 @@ void Tape::showEdit()
 {
 	this->show();
 	
-	char* up = helper.generateStringForEditTapeMode(TAPE_SIZE, "^");
-	char* vertical = helper.generateStringForEditTapeMode(TAPE_SIZE, "|");
-	char* number = helper.generateStringForEditTapeMode();
-
-	printf("%s%s%s\n", up, vertical, number);
+	string up = helper.generateStringForEditTapeMode(TAPE_SIZE, "^");
+	string vertical = helper.generateStringForEditTapeMode(TAPE_SIZE, "|");
+	cout << up << vertical << endl;
 }
 
 void Tape::editTape(int index)

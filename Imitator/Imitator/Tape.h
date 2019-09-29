@@ -1,7 +1,7 @@
 #pragma once
 class Tape
 {
-	const int TAPE_SIZE = 200;			// длина ленты
+	const int TAPE_SIZE = 100;			// длина ленты
 	const int CARRET_START_POS = 10;	// изначальная позиция кретки
 
 	int* tape;							//  бесконечная лента имитатора, \
@@ -12,6 +12,7 @@ public:
 	Tape();								// создаем ленту
 	void show();						// вывести ленту в консоль
 	void showEdit();					// вывести консоль в режиме редактирования
+	void editTape(int);					// изменяем ленту по индексу
 
 };
 

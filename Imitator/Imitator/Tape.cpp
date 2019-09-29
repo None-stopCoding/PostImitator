@@ -12,6 +12,7 @@ Tape::Tape() : tape(new int[this->TAPE_SIZE]()), carret(CARRET_START_POS)
 
 void Tape::show()
 {
+	system("cls");
 	// выводим картеку
 	for (int section = 0; section < this->TAPE_SIZE; section++) {
 		if (carret == section) {
@@ -61,4 +62,13 @@ void Tape::showEdit()
 			}
 		}
 	}
+}
+
+void Tape::editTape(int index)
+{
+	if (index < 0 || index >= TAPE_SIZE) {
+		throw "Увы, но лента не бесконечна. Обращение по индексу, которого нет.";
+	}
+
+	tape[index] = (tape[index]) ? 0 : 1;
 }

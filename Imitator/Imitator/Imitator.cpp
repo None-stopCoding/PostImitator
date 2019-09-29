@@ -2,6 +2,8 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include <string>
+using namespace std;
 
 #include "Imitator.h"
 
@@ -34,19 +36,20 @@ void Imitator::concatError(const char* msg)
 
 void Imitator::helper(const char* mode)
 {
-	printf("\nПереключение режимов:");
+	printf("\nПереключение режимов возможно только перед началом ввода!");
 	printf("\n\tCtrl - режим редактирования/ выполнения");
+	printf("\n\tEsc - режим редактирования ленты/ команд");
 	printf("\nВы в режиме %s\n", mode);
 }
 
 void Imitator::edit()
 {
-	this->helper("редактирования");
 	this->editComand();
 }
 
 void Imitator::editTape()
 {
+	this->helper("редактирования ленты");
 	try {
 		tape.showEdit();
 	}
@@ -55,16 +58,49 @@ void Imitator::editTape()
 		throw errorMsg;
 	}
 
-	printf("\nИндекс ленты, где меняем значение (если там стоит метка, то ее убираем, если ее там нет, то ставим):");
+	printf("\nИндекс ленты, где меняем значение\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
+	int input = _getch();
+	switch (input) {
+	case VK_ESCAPE:
+		this->editComand();
+		break;
+	case VK_CONTROL:
+		this->execute();
+		break;
+	case 48 ... 57:
+		input -= 48;
+		break;
+	default:
+		printf("\nВвод только чисел\n");
+		getchar();
+		Imitator::editTape();
+	}
 
-	int key = _getch();
-	if (key == VK_CONTROL) {
-		this->editComand;
+	try {
+		int secondInput = _getch();
+		if (secondInput != VK_RETURN) {
+			if (48 >= secondInput && secondInput <= 57) {
+				tape.editTape(atoi(
+					strcat(&to_string(input)[0], &to_string(secondInput)[0])
+				));
+			}
+			else {
+				throw "\nВвод только чисел";
+			}
+		}
+		else {
+			tape.editTape(atoi(&to_string(input)[0]));
+		}
+	} catch (const char* e) {
+		printf("\n%s\n", e);
+		getchar();
+		Imitator::editTape();
 	}
 }
 
 void Imitator::editComand()
 {
+	this->helper("редактирования команд");
 	try {
 		tape.show();
 	}

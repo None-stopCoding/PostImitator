@@ -22,40 +22,18 @@ Imitator::Imitator() : state(0)
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		coordinates
 	)) {
-		this->concatError("Ошибка изменения буфера консоли");
-		throw errorMsg;
+		throw helper.concatError(errorMsg, "Ошибка изменения буфера консоли");
 	}
-}
-
-void Imitator::concatError(const char* msg)
-{
-	char error[1000];
-	strcpy(error, msg);
-	strcat(errorMsg, error);
-}
-
-void Imitator::helper(const char* mode)
-{
-	printf("\nПереключение режимов возможно только перед началом ввода!");
-	printf("\n\tCtrl - режим редактирования/ выполнения");
-	printf("\n\tEsc - режим редактирования ленты/ команд");
-	printf("\nВы в режиме %s\n", mode);
-}
-
-void Imitator::edit()
-{
-	this->editComand();
 }
 
 void Imitator::editTape()
 {
-	this->helper("редактирования ленты");
+	helper.infoMessage("редактирования ленты");
 	try {
 		tape.showEdit();
 	}
 	catch (const char* e) {
-		this->concatError(e);
-		throw errorMsg;
+		throw helper.concatError(errorMsg, e);
 	}
 
 	printf("\nИндекс ленты, где меняем значение\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
@@ -67,19 +45,21 @@ void Imitator::editTape()
 	case VK_CONTROL:
 		this->execute();
 		break;
-	case 48 ... 57:
-		input -= 48;
-		break;
 	default:
-		printf("\nВвод только чисел\n");
-		getchar();
-		Imitator::editTape();
+		if (48 <= input && input <= 57) {
+			input -= 48;
+		}
+		else {
+			printf("\nВвод только чисел\n");
+			getchar();
+			Imitator::editTape();
+		}
 	}
 
 	try {
 		int secondInput = _getch();
 		if (secondInput != VK_RETURN) {
-			if (48 >= secondInput && secondInput <= 57) {
+			if (48 <= secondInput && secondInput <= 57) {
 				tape.editTape(atoi(
 					strcat(&to_string(input)[0], &to_string(secondInput)[0])
 				));
@@ -100,13 +80,12 @@ void Imitator::editTape()
 
 void Imitator::editComand()
 {
-	this->helper("редактирования команд");
+	helper.infoMessage("редактирования команд");
 	try {
 		tape.show();
 	}
 	catch (const char* e) {
-		this->concatError(e);
-		throw errorMsg;
+		throw helper.concatError(errorMsg, e);
 	}
 
 	printf("Inside");
@@ -114,7 +93,7 @@ void Imitator::editComand()
 
 void Imitator::execute()
 {
-	this->helper("компиляции");
+	helper.infoMessage("компиляции");
 }
 
 /* Геттеры */

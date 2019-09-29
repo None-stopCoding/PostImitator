@@ -1,5 +1,6 @@
 #pragma once
 #include "Tape.h"
+#include "Helper.h"
 
 class Imitator
 {
@@ -12,16 +13,15 @@ class Imitator
 																	3 - ошибка компиляции, \
 																	101 - системная ошибка)
 	Tape tape;							// лента имитатора
+	Helper helper;						// помощник
 
-	void concatError(const char* );		// сборка ошибок
-	void helper(const char* );			// информационное сообщение про режимы
 	void editTape();					// редактирование ленты
-	void editComand();					// редактирование команд
+	char* firstInput();					// ввод первого символа (обработка переключателя режимов)
 
 public:
 	Imitator();							// запуск имитатора
-	void edit();						// режим редактирования
 	void execute();						// режим компиляции
+	void editComand();					// редактирование команд
 
 	// геттеры
 	int __getState();

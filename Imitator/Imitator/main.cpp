@@ -9,7 +9,7 @@ int main()
 
 	Imitator app;
 	try {
-		app.edit();
+		app.editComand(); // запускаем имитатор в режиме редактировани команд
 	}
 	catch (const char* e) {
 		system("cls");

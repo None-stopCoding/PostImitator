@@ -72,3 +72,9 @@ void Tape::editTape(int index)
 
 	tape[index] = (tape[index]) ? 0 : 1;
 }
+
+int Tape::validate(char* input)
+{
+	int validateInput = atoi(input);
+	return validateInput;
+}

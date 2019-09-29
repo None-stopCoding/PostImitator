@@ -1,5 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
-#include <iostream>
+﻿#include <iostream>
 #include <Windows.h>
 #include <conio.h>
 #include <string>
@@ -31,20 +30,15 @@ Imitator::Imitator()
 	this->editComand();
 }
 
-char* Imitator::controlMode(const char* object)
+char* Imitator::controlMode(const char* mode)
 {
-	map<const char* , FnPtr> edit;
-	edit["tape"] = this->editTape;
-	edit["comand"] = this->editComand;
-	edit["execute"] = this->execute;
-
-	char* input;
+	char input[] = "";
 	switch (_getch()) {
 	case VK_ESCAPE:
-		edit[(object == "tape") ? "comand" : "tape"];
+		(mode == "edit tape") ? this->editComand() : this->editTape();
 		break;
 	case VK_CONTROL:
-		edit[(object == "compile") ? "comand" : "compile"];
+		(mode == "execute") ? this->editComand() : this->execute();
 		break;
 	case VK_SHIFT:
 		scanf_s("%s", input);
@@ -52,7 +46,16 @@ char* Imitator::controlMode(const char* object)
 	default:
 		printf("Ввод запрещен!");
 		getchar();
-		edit[object];
+
+		if (mode == "edit tape") {
+			this->editTape();
+		}
+		else if (mode == "edit comand") {
+			this->editComand();
+		}
+		else {
+			this->execute();
+		}
 	}
 }
 
@@ -67,25 +70,16 @@ void Imitator::editTape()
 	}
 
 	printf("\nИндекс ленты, где меняем значение\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
-	char* input = this->controlMode("tape");
+	char* input = this->controlMode("edit tape");
 	int validInput = 0;
 	
-	// TODO add exception convert int string to int to catch block
 	try {
-		validInput = atoi(input);
-		tape.editTape(validInput);
+		tape.editTape(tape.validate(input));
 	} catch (const char* e) {
 		printf("\n%s\n", e);
 		getchar();
 		Imitator::editTape();
 	}
-	
-
-	//else {
-	//	printf("\nВвод только чисе\n");
-	//	getchar();
-	//	Imitator::editTape();
-	//}
 }
 
 void Imitator::editComand()
@@ -99,7 +93,7 @@ void Imitator::editComand()
 	}
 
 	printf("\n:");
-	char* input = this->controlMode("comand");
+	char* input = this->controlMode("edit comand");
 }
 
 void Imitator::execute()

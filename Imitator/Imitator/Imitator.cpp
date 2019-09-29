@@ -27,6 +27,8 @@ Imitator::Imitator()
 	)) {
 		throw helper.concatError(errorMsg, "Ошибка изменения буфера консоли");
 	}
+
+	this->editComand();
 }
 
 char* Imitator::controlMode(const char* object)

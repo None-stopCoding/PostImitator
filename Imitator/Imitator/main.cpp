@@ -1,15 +1,13 @@
 #include <iostream>
 
 #include "Imitator.h"
-#include "Tape.h"
 
 int main()
 {
 	setlocale(LC_ALL, "ru");
 
-	Imitator app;
 	try {
-		app.editComand(); // запускаем имитатор в режиме редактировани команд
+		Imitator start;			// запускаем имитатор
 	}
 	catch (const char* e) {
 		system("cls");

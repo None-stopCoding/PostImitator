@@ -9,12 +9,12 @@ class Imitator
 	Tape tape;							// лента имитатора
 	Helper helper;						// помощник
 
+	void execute();						// режим компил€ции
 	void editTape();					// редактирование ленты
+	void editComand();					// редактирование команд
 	char* controlMode(const char*);		// ввод первого символа (обработка переключател€ режимов)
 
 public:
 	Imitator();							// запуск имитатора
-	void execute();						// режим компил€ции
-	void editComand();					// редактирование команд
 };
 

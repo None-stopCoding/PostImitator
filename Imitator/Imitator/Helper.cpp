@@ -5,10 +5,11 @@ Helper::Helper() {}
 void Helper::infoMessage(const char* mode)
 {
 	system("cls");
-	printf("\nПереключение режимов возможно только перед началом ввода!");
-	printf("\n\tCtrl - режим редактирования/ выполнения");
-	printf("\n\tEsc - режим редактирования ленты/ команд");
+	printf("Переключение режимов возможно только перед началом ввода!");
+	printf("\n\tEnter - компилировать");
+	printf("\n\tAlt - режим редактирования ленты/ команд");
 	printf("\n\tTab - нажимаем каждый раз перед вводом чего либо");
+	printf("\n\tEsc - выход");
 	printf("\n\nВы в режиме %s\n", mode);
 }
 string Helper::generateStringForEditTapeMode(int size, string str)
@@ -31,6 +32,6 @@ int Helper::validateNumber(string &input)
 		return atoi(input.c_str());
 	}
 	else {
-		throw "Ввод только чисел";
+		throw "Не является числом";
 	}
 }

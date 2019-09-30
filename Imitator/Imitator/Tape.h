@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-#include "Helper.h";
+#include "Helper.h"
 
 class Tape
 {
@@ -22,5 +22,9 @@ public:
 	void show();						// вывести ленту в консоль
 	void showEdit();					// вывести консоль в режиме редактирования
 	void editTape(int);					// изменяем ленту по индексу
+	void moveCarret(string);			// двигаем каретку
+	bool isMarked(int);					// стоит ли метка
+
+	int getCarret();					// получаем положение каретки
 };
 

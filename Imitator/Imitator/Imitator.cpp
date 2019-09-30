@@ -1,6 +1,6 @@
 ﻿#include "Imitator.h"
 
-Imitator::Imitator(): firstInput("")
+Imitator::Imitator(): userInput(""), statusExit(false)
 {
 	// TODO добавить title к консольке и поменять цвет самой консольки
 	/*const char* consoleTitle = "Машина Поста";
@@ -25,13 +25,18 @@ void Imitator::controlMode(const char* mode)
 {
 	switch (_getch()) {
 	case VK_ESCAPE:
+		statusExit = true;
+		printf("\n\nЗавершение программы имитатора...");
+		getchar();
+		break;
+	case VK_MENU:
 		(mode == "edit tape") ? this->editCommand() : this->editTape();
 		break;
-	case VK_CONTROL:
-		(mode == "execute") ? this->editCommand() : this->execute();
+	case VK_RETURN:
+		this->execute();
 		break;
 	case VK_TAB:
-		getline(cin, firstInput);
+		getline(cin, userInput);
 		return;
 	default:
 		printf("Ввод запрещен!");
@@ -40,11 +45,8 @@ void Imitator::controlMode(const char* mode)
 		if (mode == "edit tape") {
 			this->editTape();
 		}
-		else if (mode == "edit command") {
-			this->editCommand();
-		}
 		else {
-			this->execute();
+			this->editCommand();
 		}
 	}
 }
@@ -62,10 +64,10 @@ void Imitator::editTape()
 	printf("\nИндекс ленты, где меняем значение(стрелками отмечены десятки)\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
 	this->controlMode("edit tape");
 	
-	if (firstInput.length()) {
+	if (userInput.length()) {
 		try {
-			tape.editTape(helper.validateNumber(firstInput));
-			firstInput = "";
+			tape.editTape(helper.validateNumber(userInput));
+			userInput = "";
 		}
 		catch (const char* e) {
 			printf("\n%s\n", e);
@@ -74,7 +76,9 @@ void Imitator::editTape()
 		}
 	}
 
-	Imitator::editTape();
+	if (!statusExit) {
+		Imitator::editTape();
+	}
 }
 
 void Imitator::editCommand()
@@ -88,16 +92,16 @@ void Imitator::editCommand()
 		throw strcat(errorMsg, e);
 	}
 
-	printf("\nИндекс команды для редактирования (для добавления - индекс следующей после последней):");
+	printf("\nИндекс команды для редактирования (для добавления - индекс следующей после последней): ");
 	this->controlMode("edit command");
 
-	if (firstInput.length()) {
+	if (userInput.length()) {
 		try {
-			int indexEdit = helper.validateNumber(firstInput);
+			int indexEdit = helper.validateNumber(userInput);
 			string input;
-			firstInput = "";
+			userInput = "";
 
-			if (indexEdit <= command.getAmountCommands()) {
+			if (indexEdit <= command.getAmountCommands() - 1) {
 				printf("\nРедактирование %d комманды: ", indexEdit);
 
 				if (getline(cin, input)) {
@@ -119,18 +123,105 @@ void Imitator::editCommand()
 		}
 	}
 
-	Imitator::editCommand();
+	if (!statusExit) {
+		Imitator::editCommand();
+	}
 }
 
 void Imitator::execute()
 {
 	helper.infoMessage("компиляции");
-	try {
-		tape.show();
-		command.show(0);
-	}
-	catch (const char* e) {
-		throw strcat(errorMsg, e);
+	int currentCommand = 0;
+	bool success = true;
+	int commandsAmount = command.getAmountCommands();
+	while (true) {
+		string textCommand = "Еще до начала :)";
+
+		helper.infoMessage("компиляции");
+		try {
+			tape.show();
+			command.show(currentCommand);
+
+			try {
+				textCommand = command.getCurrent(currentCommand);
+			}
+			catch (const char* e) {
+				printf("\n%s\n", e);
+				throw 0;
+			}
+			
+			char operation = textCommand.at(0);
+
+			string nextCommand = textCommand.substr(1, textCommand.length() - 1);
+
+			if (operation == '>') {
+				tape.moveCarret("right");
+			}
+			else if (operation == '<') {
+				tape.moveCarret("left");
+			}
+			else if (operation == 'V') {
+				if (tape.isMarked(tape.getCarret())) {
+					printf("\nПопытка поставить метку туда, где она уже есть\n");
+					throw 0;
+				}
+
+				tape.editTape(tape.getCarret());
+			}
+			else if (operation == 'X') {
+				if (!tape.isMarked(tape.getCarret())) {
+					printf("\nПопытка убрать метку, оттуда, где ее нет\n");
+					throw 0;
+				}
+
+				tape.editTape(tape.getCarret());
+			}
+			else if (operation == '?') {
+				size_t delimiter = textCommand.find(";");
+				if (delimiter != string::npos) {
+					if (tape.isMarked(tape.getCarret())) {
+						nextCommand = textCommand.substr(delimiter + 1, textCommand.length() - delimiter - 1);
+					}
+					else {
+						nextCommand = textCommand.substr(1, delimiter - 1);
+					}
+				}
+				else {
+					throw 0;
+				}
+			}
+			else if (operation == '!') {
+				break;
+			}
+			else {
+				throw 0;
+			}
+
+			Sleep(1000);
+			try {
+				currentCommand = helper.validateNumber(nextCommand);
+			}
+			catch (const char* e) {
+				printf("%s - %s\n", nextCommand, e);
+				throw 0;
+			}
+			
+		}
+		catch (const char* e) {
+			throw strcat(errorMsg, e);
+		}
+		catch (int e) {
+			success = false;
+			printf("\nКомпиляция прервана на команде - %d. %s\n", currentCommand, textCommand.c_str());
+			getchar();
+			break;
+		}
 	}
 	
+	if (success) {
+		printf("\nПрограма успешно завершилась\n");
+		getchar();
+	}
+
+	Imitator::editCommand();
 }

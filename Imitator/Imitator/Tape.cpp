@@ -60,3 +60,41 @@ void Tape::editTape(int index)
 
 	tape[index] = (tape[index]) ? 0 : 1;
 }
+
+void Tape::moveCarret(string direction)
+{
+	if (direction == "left") {
+		if (carret) {
+			carret--;
+		}
+		else {
+			throw "Выход каретки за левую 'границу' ленты";
+		}
+	}
+	else if (direction == "right") {
+		if (carret < TAPE_SIZE) {
+			carret++;
+		}
+		else {
+			throw "Выход каретки за правую 'границу' ленты";
+		}
+	}
+	else {
+		throw "Неверное направление движения каретки";
+	}
+}
+
+bool Tape::isMarked(int index)
+{
+	if (0 <= index && index < TAPE_SIZE) {
+		return tape[index];
+	}
+	else {
+		throw "Увы, но лента не бесконечна. Обращение по индексу, которого нет.";
+	}
+}
+
+int Tape::getCarret()
+{
+	return carret;
+}

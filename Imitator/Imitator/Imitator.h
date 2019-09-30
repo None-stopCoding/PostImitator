@@ -4,7 +4,6 @@
 #include <Windows.h>
 #include <conio.h>
 #include <string>
-#include <map>
 using namespace std;
 
 
@@ -15,7 +14,8 @@ using namespace std;
 class Imitator
 {
 	char errorMsg[200] = "Ошибка в работе имитатора.Приносим свои извинения.\nТриггер:\t";
-	string firstInput;				// значение при первом вводе (при выборе режима)
+	string userInput;					// значение при первом вводе (при выборе режима)
+	bool statusExit;					// true - завершение
 
 	Tape tape;							// лента имитатора
 	Command command;					// команды

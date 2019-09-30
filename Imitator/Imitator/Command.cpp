@@ -4,9 +4,14 @@ Command::Command(): listSize(0) {}
 
 void Command::show(int carret)
 {
-	printf("\n");
-	for (int index = 0; index <	listSize; index++) {
-		printf("%s%d. %s\n", ((carret == -1) ? "\t" : "  ->"), index + 1, commandsList[index].c_str());
+	if (-1 <= carret && carret <= listSize) {
+		printf("\n");
+		for (int index = 0; index < listSize; index++) {
+			printf("%s%d. %s\n", ((carret != -1 && carret == index) ? "  ->\t" : "\t"), index, commandsList[index].c_str());
+		}
+	}
+	else {
+		throw "¬ыход за кол-во команд при отображении каретки команд";
 	}
 }
 
@@ -34,5 +39,15 @@ string Command::validate(string input)
 
 int Command::getAmountCommands()
 {
-	return	listSize;
+	return listSize;
+}
+
+string Command::getCurrent(int index)
+{
+	if (0 <= index && index < listSize) {
+		return commandsList[index];
+	}
+	else {
+		throw "ќбращение к несуществующей команде";
+	}
 }

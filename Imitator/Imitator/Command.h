@@ -8,8 +8,8 @@ class Command
 {
 	const size_t MAX_AMOUNT_COMMANDS = 1000;
 
-	vector<string> commandsList;			// список комманд
-	int listSize;					// кол-во комманд
+	vector<string> commandsList;		// список комманд
+	int listSize;						// кол-во комманд
 public:
 	Command();							// создаем хранитель команд
 	void show(int carret = -1);			// выводим список команд
@@ -17,6 +17,7 @@ public:
 	void add(string);					// добавить команду
 	string validate(string);			// валидируем команды
 
-	int getAmountCommands();			//геттеры
+	int getAmountCommands();			// получить кол-во команд
+	string getCurrent(int);				// получить команду по индексу
 };
 

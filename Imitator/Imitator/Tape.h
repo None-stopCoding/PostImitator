@@ -21,6 +21,6 @@ public:
 	void show();						// вывести ленту в консоль
 	void showEdit();					// вывести консоль в режиме редактирования
 	void editTape(int);					// изменяем ленту по индексу
-	int validate(char* );				// валидация данных
+	int validate(string&);				// валидация данных
 };
 

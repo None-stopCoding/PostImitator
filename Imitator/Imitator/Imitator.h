@@ -14,6 +14,7 @@ using namespace std;
 class Imitator
 {
 	char errorMsg[200] = "Ошибка в работе имитатора.Приносим свои извинения.\nТриггер:\t";
+	string firstInput;				// значение при первом вводе (при выборе режима)
 
 	Tape tape;							// лента имитатора
 	Helper helper;						// помощник
@@ -21,7 +22,7 @@ class Imitator
 	void execute();						// режим компиляции
 	void editTape();					// редактирование ленты
 	void editComand();					// редактирование команд
-	char* controlMode(const char*);		// ввод первого символа (обработка переключателя режимов)
+	void controlMode(const char*);		// ввод первого символа (обработка переключателя режимов)
 
 public:
 	Imitator();							// запуск имитатора

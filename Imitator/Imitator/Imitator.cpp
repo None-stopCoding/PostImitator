@@ -1,6 +1,6 @@
 ﻿#include "Imitator.h"
 
-Imitator::Imitator()
+Imitator::Imitator(): firstInput("")
 {
 	// TODO добавить title к консольке и поменять цвет самой консольки
 	/*const char* consoleTitle = "Машина Поста";
@@ -22,9 +22,8 @@ Imitator::Imitator()
 	this->editTape();
 }
 
-char* Imitator::controlMode(const char* mode)
+void Imitator::controlMode(const char* mode)
 {
-	char input[20] = "";
 	switch (_getch()) {
 	case VK_ESCAPE:
 		(mode == "edit tape") ? this->editComand() : this->editTape();
@@ -33,11 +32,10 @@ char* Imitator::controlMode(const char* mode)
 		(mode == "execute") ? this->editComand() : this->execute();
 		break;
 	case VK_TAB:
-		scanf_s("%s", &input[0]);
-		return input;
+		getline(cin, firstInput);
 	default:
 		printf("Ввод запрещен!");
-		_getch();
+		getchar();
 
 		if (mode == "edit tape") {
 			this->editTape();
@@ -62,15 +60,21 @@ void Imitator::editTape()
 	}
 
 	printf("\nИндекс ленты, где меняем значение(стрелками отмечены десятки)\n(если там стоит метка, то ее убираем, если ее там нет, то ставим):");
-	char* input = this->controlMode("edit tape");
-	printf(input);
-	try {
-		tape.editTape(tape.validate(input));
-	} catch (const char* e) {
-		printf("\n%s\n", e);
-		getchar();
-		Imitator::editTape();
+	this->controlMode("edit tape");
+	
+	if (firstInput.length()) {
+		try {
+			tape.editTape(tape.validate(firstInput));
+			firstInput = "";
+		}
+		catch (const char* e) {
+			printf("\n%s\n", e);
+			getchar();
+			Imitator::editTape();
+		}
 	}
+
+	Imitator::editTape();
 }
 
 void Imitator::editComand()
@@ -84,10 +88,11 @@ void Imitator::editComand()
 	}
 
 	printf("\n:");
-	char* input = this->controlMode("edit comand");
+	this->controlMode("edit comand");
 }
 
 void Imitator::execute()
 {
 	helper.infoMessage("компиляции");
+	getchar();
 }

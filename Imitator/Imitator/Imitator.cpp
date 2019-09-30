@@ -29,7 +29,7 @@ void Imitator::controlMode(const char* mode)
 		printf("\n\nЗавершение программы имитатора...");
 		getchar();
 		break;
-	case VK_MENU:
+	case VK_SPACE:
 		(mode == "edit tape") ? this->editCommand() : this->editTape();
 		break;
 	case VK_RETURN:

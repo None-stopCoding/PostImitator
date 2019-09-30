@@ -6,10 +6,10 @@ void Helper::infoMessage(const char* mode)
 {
 	system("cls");
 	printf("Переключение режимов возможно только перед началом ввода!");
-	printf("\n\tEnter - компилировать");
-	printf("\n\tAlt - режим редактирования ленты/ команд");
-	printf("\n\tTab - нажимаем каждый раз перед вводом чего либо");
-	printf("\n\tEsc - выход");
+	printf("\n\tEnter  - компилировать");
+	printf("\n\tПробел - режим редактирования ленты/ команд");
+	printf("\n\tTab    - нажимаем каждый раз перед вводом чего либо");
+	printf("\n\tEsc    - выход");
 	printf("\n\nВы в режиме %s\n", mode);
 }
 string Helper::generateStringForEditTapeMode(int size, string str)

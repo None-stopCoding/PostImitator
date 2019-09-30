@@ -13,4 +13,6 @@ int main()
 		system("cls");
 		printf("\n%s\n", e);
 	}
+
+	return 0;
 }

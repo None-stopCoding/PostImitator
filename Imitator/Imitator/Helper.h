@@ -8,7 +8,7 @@ class Helper
 {
 public:
 	Helper();
-	void infoMessage(const char*);												// информационное сообщение про режимы
-	string generateStringForEditTapeMode(int size, string str = "");	// генерация строки для подсказки
+	void infoMessage(const char*);											// информационное сообщение про режимы
+	string generateStringForEditTapeMode(int size, string str = "");		// генерация строки для подсказки
+	int validateNumber(string&);											// валидация числа
 };
-

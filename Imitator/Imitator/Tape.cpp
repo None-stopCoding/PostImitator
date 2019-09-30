@@ -8,6 +8,11 @@ Tape::Tape() : tape(new int[TAPE_SIZE]()), carret(CARRET_START_POS)
 	tape[13] = 1;
 }
 
+Tape::~Tape()
+{
+	delete[] tape;
+}
+
 void Tape::show()
 {
 	// выводим картеку
@@ -54,17 +59,4 @@ void Tape::editTape(int index)
 	}
 
 	tape[index] = (tape[index]) ? 0 : 1;
-}
-
-int Tape::validate(string &input)
-{
-	int validateInput = 0;
-	if (input.find_first_not_of("0123456789") == std::string::npos) {
-		validateInput = atoi(input.c_str());
-	}
-	else {
-		throw "¬вод только чисел";
-	}
-	
-	return validateInput;
 }

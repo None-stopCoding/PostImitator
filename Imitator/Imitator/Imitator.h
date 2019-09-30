@@ -9,6 +9,7 @@ using namespace std;
 
 
 #include "Tape.h"
+#include "Command.h"
 #include "Helper.h"
 
 class Imitator
@@ -17,11 +18,12 @@ class Imitator
 	string firstInput;				// значение при первом вводе (при выборе режима)
 
 	Tape tape;							// лента имитатора
+	Command command;					// команды
 	Helper helper;						// помощник
 
 	void execute();						// режим компил€ции
 	void editTape();					// редактирование ленты
-	void editComand();					// редактирование команд
+	void editCommand();					// редактирование команд
 	void controlMode(const char*);		// ввод первого символа (обработка переключател€ режимов)
 
 public:

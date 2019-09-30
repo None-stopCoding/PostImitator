@@ -18,9 +18,9 @@ class Tape
 
 public:
 	Tape();								// создаем ленту
+	~Tape();							// крашим ленту
 	void show();						// вывести ленту в консоль
 	void showEdit();					// вывести консоль в режиме редактирования
 	void editTape(int);					// изменяем ленту по индексу
-	int validate(string&);				// валидация данных
 };
 

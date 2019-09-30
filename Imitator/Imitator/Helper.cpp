@@ -9,7 +9,7 @@ void Helper::infoMessage(const char* mode)
 	printf("\n\tCtrl - режим редактирования/ выполнения");
 	printf("\n\tEsc - режим редактирования ленты/ команд");
 	printf("\n\tTab - нажимаем каждый раз перед вводом чего либо");
-	printf("\nВы в режиме %s\n", mode);
+	printf("\n\nВы в режиме %s\n", mode);
 }
 string Helper::generateStringForEditTapeMode(int size, string str)
 {
@@ -23,4 +23,14 @@ string Helper::generateStringForEditTapeMode(int size, string str)
 	}
 
 	return line + "\n";
+}
+
+int Helper::validateNumber(string &input)
+{
+	if (input.find_first_not_of("0123456789") == std::string::npos) {
+		return atoi(input.c_str());
+	}
+	else {
+		throw "Ввод только чисел";
+	}
 }

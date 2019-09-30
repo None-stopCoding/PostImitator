@@ -11,7 +11,7 @@ class Command
 	vector<string> commandsList;		// список комманд
 	int listSize;						// кол-во комманд
 public:
-	Command();							// создаем хранитель команд
+	Command();							// создаем список команд
 	void show(int carret = -1);			// выводим список команд
 	void edit(int, string);				// редактировать команду
 	void add(string);					// добавить команду

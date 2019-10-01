@@ -21,6 +21,7 @@ class Imitator
 
 	void execute();						// режим компиляции
 	void editTape();					// редактирование ленты
+	void editCarret();					// редактирование каретки
 	void editCommand();					// редактирование команд
 	void controlMode(const char*);		// переключатель режимов
 

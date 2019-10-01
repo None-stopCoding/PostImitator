@@ -81,6 +81,11 @@ void Imitator::editTape()
 	}
 }
 
+void Imitator::editCarret()
+{
+
+}
+
 void Imitator::editCommand()
 {
 	helper.infoMessage("редактирования команд");
@@ -135,7 +140,7 @@ void Imitator::execute()
 	bool success = true;
 	int commandsAmount = command.getAmountCommands();
 	while (true) {
-		string textCommand = "Еще до начала :)";
+		string textCommand = "Еще до начала :)", nextCommand = "Еще до начала :)";
 
 		helper.infoMessage("компиляции");
 		try {
@@ -144,65 +149,64 @@ void Imitator::execute()
 
 			try {
 				textCommand = command.getCurrent(currentCommand);
-			}
-			catch (const char* e) {
-				printf("\n%s\n", e);
-				throw 0;
-			}
-			
-			char operation = textCommand.at(0);
+				char operation = textCommand.at(0);
+				nextCommand = textCommand.substr(1, textCommand.length() - 1);
 
-			string nextCommand = textCommand.substr(1, textCommand.length() - 1);
-
-			if (operation == '>') {
-				tape.moveCarret("right");
-			}
-			else if (operation == '<') {
-				tape.moveCarret("left");
-			}
-			else if (operation == 'V') {
-				if (tape.isMarked(tape.getCarret())) {
-					printf("\nПопытка поставить метку туда, где она уже есть\n");
-					throw 0;
+				if (operation == '>') {
+					tape.moveCarret(tape.getCarret() + 1);
 				}
-
-				tape.editTape(tape.getCarret());
-			}
-			else if (operation == 'X') {
-				if (!tape.isMarked(tape.getCarret())) {
-					printf("\nПопытка убрать метку, оттуда, где ее нет\n");
-					throw 0;
+				else if (operation == '<') {
+					tape.moveCarret(tape.getCarret() - 1);
 				}
-
-				tape.editTape(tape.getCarret());
-			}
-			else if (operation == '?') {
-				size_t delimiter = textCommand.find(";");
-				if (delimiter != string::npos) {
+				else if (operation == 'V') {
 					if (tape.isMarked(tape.getCarret())) {
-						nextCommand = textCommand.substr(delimiter + 1, textCommand.length() - delimiter - 1);
+						printf("\nПопытка поставить метку туда, где она уже есть\n");
+						throw 0;
+					}
+
+					tape.editTape(tape.getCarret());
+				}
+				else if (operation == 'X') {
+					if (!tape.isMarked(tape.getCarret())) {
+						printf("\nПопытка убрать метку, оттуда, где ее нет\n");
+						throw 0;
+					}
+
+					tape.editTape(tape.getCarret());
+				}
+				else if (operation == '?') {
+					size_t delimiter = textCommand.find(";");
+					if (delimiter != string::npos) {
+						if (tape.isMarked(tape.getCarret())) {
+							nextCommand = textCommand.substr(delimiter + 1, textCommand.length() - delimiter - 1);
+						}
+						else {
+							nextCommand = textCommand.substr(1, delimiter - 1);
+						}
 					}
 					else {
-						nextCommand = textCommand.substr(1, delimiter - 1);
+						throw 0;
 					}
+				}
+				else if (operation == '!') {
+					break;
 				}
 				else {
 					throw 0;
 				}
 			}
-			else if (operation == '!') {
-				break;
-			}
-			else {
+			catch (const char* e) {
+				printf("\nОшибка: %s\n", e);
 				throw 0;
 			}
+			
 
 			Sleep(1000);
 			try {
 				currentCommand = helper.validateNumber(nextCommand);
 			}
 			catch (const char* e) {
-				printf("%s - %s\n", nextCommand, e);
+				printf("%s - %s\n", nextCommand.c_str(), e);
 				throw 0;
 			}
 			

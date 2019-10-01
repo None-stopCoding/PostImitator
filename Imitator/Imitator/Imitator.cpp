@@ -30,7 +30,32 @@ void Imitator::controlMode(const char* mode)
 		getchar();
 		break;
 	case VK_SPACE:
-		(mode == "edit tape") ? this->editCommand() : this->editTape();
+		printf("\nВыберите подрежим редактирования (1, 2, 3): ");
+		switch (_getch()) {
+		case 49:
+			this->editCommand();
+			break;
+		case 50:
+			this->editTape();
+			break;
+		case 51:
+			this->editCarret();
+			break;
+		default:
+			printf("\nНеверный выбор подрежима редактирования\n");
+			getchar();
+
+			if (mode == "edit tape") {
+				this->editTape();
+			}
+			else if (mode == "edit command") {
+				this->editCommand();
+			}
+			else {
+				this->editCarret();
+			}
+		}
+
 		break;
 	case VK_RETURN:
 		this->execute();
@@ -45,8 +70,11 @@ void Imitator::controlMode(const char* mode)
 		if (mode == "edit tape") {
 			this->editTape();
 		}
-		else {
+		else if (mode == "edit command") {
 			this->editCommand();
+		}
+		else {
+			this->editCarret();
 		}
 	}
 }
@@ -83,7 +111,32 @@ void Imitator::editTape()
 
 void Imitator::editCarret()
 {
+	helper.infoMessage("редактирования каретки");
+	try {
+		tape.showEdit();
+	}
+	catch (const char* e) {
+		throw strcat(errorMsg, e);
+	}
 
+	printf("\nИндекс ленты, куда ставим каретку (стрелками отмечены десятки):");
+	this->controlMode("edit carret");
+
+	if (userInput.length()) {
+		try {
+			tape.moveCarret(helper.validateNumber(userInput));
+			userInput = "";
+		}
+		catch (const char* e) {
+			printf("\n%s\n", e);
+			getchar();
+			Imitator::editCarret();
+		}
+	}
+
+	if (!statusExit) {
+		Imitator::editCarret();
+	}
 }
 
 void Imitator::editCommand()

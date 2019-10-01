@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Imitator.h"
 
 int main()
@@ -12,6 +10,7 @@ int main()
 	catch (const char* e) {
 		system("cls");
 		printf("\n%s\n", e);
+		getchar();
 	}
 
 	return 0;

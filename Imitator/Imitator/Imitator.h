@@ -1,12 +1,31 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#include <Windows.h>
+#include <conio.h>
+using namespace std;
+
+
+#include "Tape.h"
+#include "Command.h"
+#include "Helper.h"
+
 class Imitator
 {
-private:
-	int state;		// статус работы програмы (	0 - работает в режиме редактировани€, \
-												1 - работает в режиме компил€ции, \
-												2 - ошибка режима компил€ции)
+	char errorMsg[200] = "ќшибка в работе имитатора.ѕриносим свои извинени€.\n“риггер:\t";
+	string userInput;					// значение при первом вводе (при выборе режима)
+	bool statusExit;					// true - завершение
+
+	Tape tape;							// лента имитатора
+	Command command;					// команды
+	Helper helper;						// помощник
+
+	void execute();						// режим компил€ции
+	void editTape();					// редактирование ленты
+	void editCarret();					// редактирование каретки
+	void editCommand();					// редактирование команд
+	void controlMode(const char*);		// переключатель режимов
+
 public:
-	Imitator();		// запуск имитатора
-	void run();		// запуск режима редактировани€
+	Imitator();							// запуск имитатора
 };
 
